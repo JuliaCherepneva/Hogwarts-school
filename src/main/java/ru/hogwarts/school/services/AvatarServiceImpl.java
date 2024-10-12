@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
+@Transactional
 public class AvatarServiceImpl implements AvatarService {
 
     @Value("${path.to.avatars.folder}")
@@ -75,7 +76,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
 
-    @Transactional
+
     private byte [] generateDataForDB (Path filePath) throws IOException {
         try (
                 InputStream is = Files.newInputStream(filePath);

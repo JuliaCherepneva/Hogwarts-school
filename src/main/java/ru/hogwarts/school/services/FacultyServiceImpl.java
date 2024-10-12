@@ -1,4 +1,5 @@
 package ru.hogwarts.school.services;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repositories.FacultyRepository;
@@ -6,6 +7,7 @@ import ru.hogwarts.school.repositories.FacultyRepository;
 
 import java.util.*;
 @Service
+@Transactional
 public class FacultyServiceImpl implements FacultyService{
 
     private final FacultyRepository facultyRepository;

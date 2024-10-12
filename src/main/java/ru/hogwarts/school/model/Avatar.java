@@ -18,7 +18,6 @@ public class Avatar {
     private String mediaType;
 
     @Lob
-    @Column (columnDefinition =  "oid")
     private byte[] data;
 
     @OneToOne

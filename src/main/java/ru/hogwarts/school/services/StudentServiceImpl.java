@@ -1,4 +1,5 @@
 package ru.hogwarts.school.services;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -9,6 +10,7 @@ import java.util.*;
 
 
 @Service
+@Transactional
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
