@@ -13,15 +13,21 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultActionsDsl;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositories.FacultyRepository;
 import ru.hogwarts.school.repositories.StudentRepository;
 import ru.hogwarts.school.services.AvatarService;
 import ru.hogwarts.school.services.StudentService;
 import ru.hogwarts.school.services.StudentServiceImpl;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest( controllers = StudentController.class)
 class StudentControllerWebMvcTest {
@@ -29,22 +35,20 @@ class StudentControllerWebMvcTest {
     @Autowired
     private MockMvc mockMvc;
 
-
+    @Autowired
     private ObjectMapper objectMapper;
 
-    /*
+
     @MockBean
     private StudentService studentService;
-    @MockBean
-    private AvatarService avatarService;
+
     @MockBean
     private StudentRepository studentRepository;
-*/
 
-    @BeforeEach
-    public void setUp(){
-       objectMapper = new ObjectMapper();
-    }
+    @MockBean
+    private FacultyRepository facultyRepository;
+
+
 
     @Test
     void shouldGetStudent() throws Exception {
@@ -52,7 +56,7 @@ class StudentControllerWebMvcTest {
         Long studentId = 1L;
         Student student = new Student(12, "Вася");
 
-       // when(studentService.findStudent(studentId)).thenReturn(student);
+        when(studentService.findStudent(studentId)).thenReturn(student);
         // when
         ResultActions perform = mockMvc.perform(get("/student/{id}", studentId));
         // then
@@ -62,7 +66,7 @@ class StudentControllerWebMvcTest {
                 .andDo(print());
 
     }
-/*
+
     @Test
     void shouldCreateStudent() throws Exception {
         // given
@@ -99,7 +103,35 @@ class StudentControllerWebMvcTest {
                 .andDo(print());
     }
 
- */
+    @Test
+    void shouldDeleteStudent() throws Exception {
+        // given
+        Long studentId = 1L;
+        Student student = new Student(20, "Ivan");
+        // when
+        ResultActions perform = mockMvc.perform(delete("/student/{id}", studentId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(student)));
+        // then
+        perform
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldGetStudentByAge() throws Exception {
+        // given
+        Collection<Student> students = new ArrayList<>();
+        Student student1 = new Student(12, "Вася");
+        Student student2 = new Student(15, "Вася");
+
+        when(studentService.findByAgeBetween(11, 16)).thenReturn(new ArrayList<>());
+        // when
+        ResultActions perform = mockMvc.perform(get("/student/filter?min=11&max=16"));
+        // then
+        perform
+                .andExpect(content().json(objectMapper.writeValueAsString(students)));
+
+    }
 
 }
 
