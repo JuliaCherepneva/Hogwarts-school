@@ -35,6 +35,7 @@ public class StudentServiceImpl implements StudentService {
     public void expelStudent (long id) {
         studentRepository.deleteById(id);
     }
+
     public Collection <Student> findByAge(int age) {
         return studentRepository.findByAge(age);
 
