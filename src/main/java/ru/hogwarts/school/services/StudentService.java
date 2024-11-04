@@ -10,4 +10,5 @@ public interface StudentService {
     void expelStudent (long id);
     Collection<Student> findByAge(int age);
     Faculty getById(long id);
+    Collection <Student> findByAgeBetween(int min, int max);
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 @Entity
 @JsonIgnoreProperties(value = {"students"})
 public class Faculty {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -18,6 +19,13 @@ public class Faculty {
     @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
     private Set<Student> students;
 
+    public Faculty () {
+    }
+
+    public Faculty(String name, String color) {
+        this.name = name;
+        this.color = color;
+    }
 
     public long getId() {
         return id;
