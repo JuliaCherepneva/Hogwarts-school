@@ -9,6 +9,7 @@ import ru.hogwarts.school.services.StudentServiceImpl;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -63,5 +64,20 @@ public class StudentController {
     @GetMapping("/studentsFaculty/{id}")
     public Faculty getFaculty (@PathVariable Long id) {
         return studentService.getById(id);
+    }
+
+    @GetMapping ("/studentCount")
+    public Integer getAllByCount () {
+        return studentService.getAllByCount();
+    }
+
+    @GetMapping ("/avgAge")
+    public Integer getAvgAgeStudents () {
+        return studentService.getAvgAgeStudents();
+    }
+
+    @GetMapping ("/GroupById")
+    public List <Student> getStudentGroupById () {
+        return studentService.getStudentGroupById();
     }
 }
