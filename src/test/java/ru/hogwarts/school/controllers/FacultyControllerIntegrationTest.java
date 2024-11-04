@@ -168,7 +168,7 @@ class FacultyControllerIntegrationTest {
 
     @Test
     void shouldGetStudents() {
-        ResponseEntity <Set<Student>> facultyResponseEntity = restTemplate.exchange("http://localhost:" + port + "/faculty/students/1",
+        ResponseEntity <Set<Student>> facultyResponseEntity = restTemplate.exchange("http://localhost:" + port + "/faculty/students/" + faculty.getId(),
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference <Set<Student>>  () {});
@@ -191,7 +191,7 @@ class FacultyControllerIntegrationTest {
         studentEntity.setFaculty(faculty1);
         final Student student1 = studentRepository.save(studentEntity);
 
-        ResponseEntity <Set<Student>> facultyResponseEntity = restTemplate.exchange("http://localhost:" + port + "/faculty/students/" + student1.getId(),
+        ResponseEntity <Set<Student>> facultyResponseEntity = restTemplate.exchange("http://localhost:" + port + "/faculty/students/" + faculty1.getId(),
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference <Set<Student>>  () {});
