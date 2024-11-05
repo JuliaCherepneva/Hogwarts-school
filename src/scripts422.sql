@@ -1,0 +1,3 @@
+CREATE TABLE person (id SERIAL, name TEXT PRIMARY KEY, age INTEGER CHECK (age > 0), driver BOOLEAN NOT NULL, car TEXT REFERENCES car (id));
+
+CREATE TABLE car (id SERIAL, brand TEXT NOT NULL, model TEXT NOT NULL, price NUMERIC (16,3) CHECK (price > 0));
