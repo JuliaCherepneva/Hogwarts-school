@@ -81,12 +81,15 @@ public class StudentController {
         return studentService.getStudentGroupById();
     }
 
-    @GetMapping ("/{name}")
-    public ResponseEntity<List <Student>> getStudentByName (@PathVariable String name) {
-        List <Student> students = studentService.findByName(name);
+
+    @GetMapping ("/name/{name}")
+    public ResponseEntity<List <Student>> getStudentsByName (@PathVariable String name) {
+        List <Student> students = studentService.getStudentsByName(name);
         if (students == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(students);
     }
+
+
 }

@@ -16,5 +16,5 @@ public interface StudentService {
     Integer getAllByCount ();
     Integer getAvgAgeStudents ();
     List<Student> getStudentGroupById ();
-    List <Student> findByName(String name);
+   List <Student> getStudentsByName(String name);
 }
