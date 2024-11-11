@@ -61,4 +61,10 @@ public class StudentServiceImpl implements StudentService {
     public List <Student> getStudentGroupById () {
         return studentRepository.getStudentGroupById();
     }
+
+    public List <Student> getStudentsByName (String name) {
+        return studentRepository.getStudentsByName(name);
+    }
+
+
 }
