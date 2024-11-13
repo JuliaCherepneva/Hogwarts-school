@@ -1,4 +1,5 @@
 package ru.hogwarts.school.controllers;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class FacultyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Faculty> getFaculty (@PathVariable Long id) {
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
         Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
@@ -28,28 +29,29 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
 
     }
+
     @PostMapping("/add")
-    public Faculty createFaculty (@RequestBody Faculty faculty) {
+    public Faculty createFaculty(@RequestBody Faculty faculty) {
         return facultyService.createFaculty(faculty);
     }
 
     @PutMapping("/edit")
-    public ResponseEntity <Faculty> editStudent (@RequestBody Faculty faculty) {
+    public ResponseEntity<Faculty> editStudent(@RequestBody Faculty faculty) {
         Faculty editFaculty = facultyService.editFaculty(faculty);
-        if (editFaculty == null){
+        if (editFaculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(editFaculty);
     }
 
-    @DeleteMapping ("/{id}")
-    public ResponseEntity <Faculty> deleteFaculty (@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
 
     }
 
-    @GetMapping ("/filter")
+    @GetMapping("/filter")
     public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color,
                                                              @RequestParam(required = false) String name) {
         if (color != null && !color.isBlank()) {
@@ -62,8 +64,21 @@ public class FacultyController {
     }
 
 
-    @GetMapping ("/students/{id}")
-    public Set<Student> getFacultyByStudent (@PathVariable Long id) {
+    @GetMapping("/students/{id}")
+    public Set<Student> getFacultyByStudent(@PathVariable Long id) {
         return facultyService.findFaculty(id).getStudents();
     }
+
+    @GetMapping("/lengthName")
+    public ResponseEntity<String> getLengthName() {
+        String lengthName = facultyService.getLengthName();
+        return ResponseEntity.ok(lengthName);
+    }
+
+    @GetMapping("/task")
+    public ResponseEntity<Integer> getAnswerByTask() {
+        Integer answer = facultyService.getAnswerByTask();
+        return ResponseEntity.ok(answer);
+    }
+
 }
