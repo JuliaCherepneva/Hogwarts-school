@@ -1,5 +1,7 @@
 package ru.hogwarts.school.services;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -19,51 +21,80 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
+    Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+
 
     public Student addStudent (Student student) {
-        return studentRepository.save(student);
+        logger.debug("Requesting added a student: {}", student);
+        Student save = studentRepository.save(student);
+        logger.debug("The student {} added", student);
+        return save;
     }
 
     public Student findStudent (long id) {
-        return studentRepository.findById(id);
+        logger.debug("Requesting to find student by id: {}", id);
+        final Student byId = studentRepository.findById(id);
+        logger.debug("The student by id {} finded", id);
+        return byId;
     }
 
     public Student editStudent (Student student) {
-        return studentRepository.save(student);
+        logger.debug("Requesting edit a student: {}", student);
+        final Student saveEdit = studentRepository.save(student);
+        logger.debug("The student {} edited", student);
+        return saveEdit;
     }
 
     public void expelStudent (long id) {
+        logger.debug("Requesting to delete student by id: {}", id);
         studentRepository.deleteById(id);
+        logger.debug("The student by id {}  deleted", id);
     }
 
     public Collection <Student> findByAge(int age) {
-        return studentRepository.findByAge(age);
-
+        logger.debug("Requesting to find students by age: {}", age);
+        final List<Student> byAge = studentRepository.findByAge(age);
+        logger.debug("The students by age {}  finded", age);
+        return byAge;
     }
 
 
     public Collection <Student> findByAgeBetween(int min, int max) {
-        return studentRepository.findByAgeBetween(min, max);
+        logger.debug("Requesting to find students by age between min {} and max: {}", min, max);
+        final Collection<Student> byAgeBetween = studentRepository.findByAgeBetween(min, max);
+        logger.info("The students finded");
+        return byAgeBetween;
     }
 
     public Faculty getById(long id) {
+        logger.debug("Requesting to find faculty by student's id: {}", id);
         Student student = studentRepository.findById(id);
+        logger.debug("The faculty by student's id {}  finded", id);
         return student.getFaculty();
     }
     public Integer getAllByCount () {
-        return studentRepository.getAllByCount();
+        final Integer allByCount = studentRepository.getAllByCount();
+        logger.info("All students found");
+        return allByCount;
     }
 
     public  Integer getAvgAgeStudents () {
-        return studentRepository.getAvgAgeStudents();
+        final Integer avgAgeStudents = studentRepository.getAvgAgeStudents();
+        logger.info("The average age of students was obtained");
+        return avgAgeStudents;
+
     }
 
     public List <Student> getStudentGroupById () {
-        return studentRepository.getStudentGroupById();
+        final List<Student> studentGroupById = studentRepository.getStudentGroupById();
+        logger.info("Grouping students by id is complete");
+        return studentGroupById;
     }
 
     public List <Student> getStudentsByName (String name) {
-        return studentRepository.getStudentsByName(name);
+        final List<Student> studentsByName = studentRepository.getStudentsByName(name);
+        logger.info("The students found");
+        return studentsByName;
     }
 
 
