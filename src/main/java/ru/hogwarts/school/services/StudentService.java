@@ -19,5 +19,6 @@ public interface StudentService {
     List <Student> getStudentsByName(String name);
     List<String> filterByName ();
     Double filterByAvg ();
-
+    void parallelName ();
+    void synchronizedName();
 }
