@@ -2,6 +2,7 @@ package ru.hogwarts.school.services;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -97,5 +98,21 @@ public class StudentServiceImpl implements StudentService {
         return studentsByName;
     }
 
+    public List<String> filterByName () {
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .filter(i -> i.getName().startsWith ("А"))
+                .map (i->i.getName().toUpperCase())
+                .sorted()
+                .toList();
+    }
 
+    public Double filterByAvg () {
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .mapToDouble (Student :: getAge)
+                .average().orElseThrow();
+    }
 }
