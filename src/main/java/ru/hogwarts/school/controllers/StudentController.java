@@ -106,6 +106,15 @@ public class StudentController {
         return ResponseEntity.ok(filter);
     }
 
+    @GetMapping ("/print-parallel")
+    public void parallelName () {
+       studentService.parallelName();
 
+    }
 
+    @GetMapping ("/print-synchronized")
+    public void synchronizedName () {
+        studentService.synchronizedName();
+
+    }
 }
